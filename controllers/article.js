@@ -103,6 +103,33 @@ const controller = {
         });
       });
   },
+
+  updateById: (request, response) => {
+    const articleId = request.params.id;
+    const articleData = request.body;
+
+    try {
+      validateArticle(articleData);
+    } catch (error) {
+      return response.status(400).json({
+        status: error,
+        message: "Error validating data: " + error.message,
+      });
+    }
+
+    Article.findOneAndUpdate({ _id: articleId }, articleData, { new: true })
+      .then((updatedArticle) => {
+        return response
+          .status(200)
+          .json({ status: "success", Article: updatedArticle });
+      })
+      .catch((error) => {
+        return response.status(400).json({
+          status: "error",
+          message: "Error updating article. " + error,
+        });
+      });
+  },
 };
 
 module.exports = controller;
