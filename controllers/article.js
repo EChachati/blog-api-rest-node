@@ -45,9 +45,10 @@ const controller = {
   },
 
   list: (request, response) => {
-    Article.find()
-      .exec()
+    Article.find() // Make a Query add filters here
+      .exec() // Execute the Query
       .then((articles) => {
+        // After the query is done
         if (articles.length < 1) {
           return response
             .status(404)
