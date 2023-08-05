@@ -1,5 +1,6 @@
 const { validateArticle } = require("../utils/validators");
 const Article = require("../models/Article");
+
 // Create controller object with all the used functions
 const controller = {
   test: (request, response) => {
@@ -40,6 +41,25 @@ const controller = {
           status: error,
           message: "Error Saving data:" + error,
         });
+      });
+  },
+
+  list: (request, response) => {
+    Article.find()
+      .exec()
+      .then((articles) => {
+        if (articles.length < 1) {
+          return response
+            .status(404)
+            .json({ status: "error", message: "No Articles found" });
+        }
+        return response.status(200).json({
+          status: "success",
+          articles: articles,
+        });
+      })
+      .catch((error) => {
+        return response.status(404).json({ status: "error", message: error });
       });
   },
 };
