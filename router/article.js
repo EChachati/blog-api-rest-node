@@ -31,6 +31,7 @@ router.post(
   [uploads.single("file")],
   ArticleController.loadImage
 );
+router.get("/image/:filename", ArticleController.getImage);
 
 // Export Router
 module.exports = router;

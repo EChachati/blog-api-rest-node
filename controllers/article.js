@@ -1,5 +1,7 @@
 const { validateArticle, validateImageFile } = require("../utils/validators");
 const Article = require("../models/Article");
+const fs = require("fs");
+const path = require("path");
 
 // Create controller object with all the used functions
 const controller = {
@@ -159,6 +161,18 @@ const controller = {
           message: "Error updating article. " + error,
         });
       });
+  },
+
+  getImage: (request, response) => {
+    const filePath = "./images/articles/" + request.params.filename;
+    fs.stat(filePath, (error, exists) => {
+      if (exists) return response.sendFile(path.resolve(filePath));
+      else
+        return response.status(404).json({
+          status: "error",
+          message: "Image " + request.params.filename + " not found.",
+        });
+    });
   },
 };
 
