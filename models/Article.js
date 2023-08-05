@@ -1,6 +1,7 @@
 // Imports
 const { Schema, model } = require("mongoose");
 
+// https://mongoosejs.com/docs/guide.html Documentation Schemas fields
 const ArticleSchema = Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
