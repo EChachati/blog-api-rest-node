@@ -66,6 +66,23 @@ const controller = {
         return response.status(404).json({ status: "error", message: error });
       });
   },
+
+  getById: (request, response) => {
+    Article.findById(request.params.id)
+      .exec()
+      .then((article) => {
+        return response.status(200).json({
+          status: "success",
+          article: article,
+        });
+      })
+      .catch((error) => {
+        return response.status(404).json({
+          status: "error",
+          message: "Article Not Found. Error detail: " + error,
+        });
+      });
+  },
 };
 
 module.exports = controller;
