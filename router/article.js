@@ -8,7 +8,7 @@ const router = express.Router();
 // Routes
 router.get("/test", ArticleController.test);
 router.post("/create", ArticleController.create);
-router.get("/list", ArticleController.list);
+router.get("/list/:limit?", ArticleController.list);
 
 // Export Router
 module.exports = router;

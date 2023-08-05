@@ -46,6 +46,8 @@ const controller = {
 
   list: (request, response) => {
     Article.find() // Make a Query add filters here
+      .limit(request.params.limit)
+      .sort({ date: -1 }) // Sort newer to older
       .exec() // Execute the Query
       .then((articles) => {
         // After the query is done
@@ -56,6 +58,7 @@ const controller = {
         }
         return response.status(200).json({
           status: "success",
+          url_param: request.params.limit,
           articles: articles,
         });
       })
