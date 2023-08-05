@@ -1,4 +1,4 @@
-const { validateArticle } = require("../utils/validators");
+const { validateArticle, validateImageFile } = require("../utils/validators");
 const Article = require("../models/Article");
 
 // Create controller object with all the used functions
@@ -129,6 +129,24 @@ const controller = {
           message: "Error updating article. " + error,
         });
       });
+  },
+
+  loadImage: (request, response) => {
+    // validate File
+    try {
+      validateImageFile(request.file);
+    } catch (error) {
+      return response.status(400).json({
+        status: error,
+        message: "Error validating file: " + error.message,
+      });
+    }
+    // update article
+    return response.status(200).json({
+      status: "success",
+      file: request.file,
+      extension: extension,
+    });
   },
 };
 
