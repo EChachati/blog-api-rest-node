@@ -15,7 +15,10 @@ const port = 3900;
 
 // The next ones are Middleware
 app.use(cors()); // Configure CORS
-app.use(express.json()); // Convert body to JSON
+
+// Convert body to JSON
+app.use(express.json()); // Receive data with content-type app/json
+app.use(express.urlencoded({ extended: true })); // Receive data with other content-types
 
 // Routes
 // Import Routers
