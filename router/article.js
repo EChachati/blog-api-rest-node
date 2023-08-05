@@ -10,6 +10,7 @@ router.get("/test", ArticleController.test);
 router.post("/create", ArticleController.create);
 router.get("/list/:limit?", ArticleController.list);
 router.get("/get/:id", ArticleController.getById);
+router.delete("/delete/:id", ArticleController.deleteById);
 
 // Export Router
 module.exports = router;

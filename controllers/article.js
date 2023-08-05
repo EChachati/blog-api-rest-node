@@ -83,6 +83,26 @@ const controller = {
         });
       });
   },
+
+  deleteById: (request, response) => {
+    const deletedArticle = Article.findOneAndDelete({ _id: request.params.id });
+
+    deletedArticle
+      .then((deletedArticle) => {
+        if (!deletedArticle) throw new Error("Article Does Not Exist");
+        return response.status(200).json({
+          status: "success",
+          message: "Article deleted successfully!",
+          deletedArticle: deletedArticle,
+        });
+      })
+      .catch((error) => {
+        return response.status(400).json({
+          status: "error",
+          message: "Error deleting article. " + error,
+        });
+      });
+  },
 };
 
 module.exports = controller;
