@@ -18,6 +18,13 @@ app.use(cors()); // Configure CORS
 app.use(express.json()); // Convert body to JSON
 
 // Routes
+// Import Routers
+const articleRoutes = require("./router/article");
+
+// Add Router
+app.use("/api/article", articleRoutes);
+
+// Test Endpoint
 app.get("/", (request, response) => {
   console.log("Called Endpoint test :3");
   return response.status(200).json({
