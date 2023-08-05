@@ -201,7 +201,7 @@ const controller = {
       .catch((error) => {
         return response.status(404).json({
           status: "error",
-          message: "No Article contains: " + query + " Error detail: " + error,
+          message: "No Article contains: " + query + ". " + error,
         });
       });
   },
