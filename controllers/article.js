@@ -2,6 +2,9 @@ const { validateArticle, validateImageFile } = require("../utils/validators");
 const Article = require("../models/Article");
 const fs = require("fs");
 const path = require("path");
+const { request } = require("http");
+const { response } = require("express");
+const { error } = require("console");
 
 // Create controller object with all the used functions
 const controller = {
@@ -173,6 +176,34 @@ const controller = {
           message: "Image " + request.params.filename + " not found.",
         });
     });
+  },
+
+  search: (request, response) => {
+    const query = request.params.query;
+
+    Article.find({
+      $or: [
+        // If any of the following conditions are true
+        {
+          title: { $regex: query, $options: "i" }, // assert title include query
+        },
+        {
+          content: { $regex: query, $options: "i" }, // assert content include query
+        },
+      ],
+    })
+      .sort({ date: -1 })
+      .exec()
+      .then((articles) => {
+        if (articles.length <= 0) throw new Error("No Articles Found");
+        return response.status(200).json({ status: "success", articles });
+      })
+      .catch((error) => {
+        return response.status(404).json({
+          status: "error",
+          message: "No Article contains: " + query + " Error detail: " + error,
+        });
+      });
   },
 };
 

@@ -32,6 +32,7 @@ router.post(
   ArticleController.loadImage
 );
 router.get("/image/:filename", ArticleController.getImage);
+router.get("/search/:query", ArticleController.search);
 
 // Export Router
 module.exports = router;
