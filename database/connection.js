@@ -3,7 +3,7 @@ const mongoose = require("mongoose"); // Equivalent to Import
 const connection = async () => {
   try {
     await mongoose.connect("mongodb://127.0.0.1:27017/my_blog");
-    console.log("Good Connection!");
+    console.log("Good Connection to DB!");
   } catch (error) {
     console.log(error);
     throw new Error("Unable connection to DB");
