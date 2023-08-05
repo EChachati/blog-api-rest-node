@@ -141,12 +141,24 @@ const controller = {
         message: "Error validating file: " + error.message,
       });
     }
+
     // update article
-    return response.status(200).json({
-      status: "success",
-      file: request.file,
-      extension: extension,
-    });
+    Article.findOneAndUpdate(
+      { _id: request.params.id },
+      { image: request.file.filename },
+      { new: true }
+    )
+      .then((updatedArticle) => {
+        return response
+          .status(200)
+          .json({ status: "success", Article: updatedArticle });
+      })
+      .catch((error) => {
+        return response.status(400).json({
+          status: "error",
+          message: "Error updating article. " + error,
+        });
+      });
   },
 };
 
